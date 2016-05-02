@@ -46,6 +46,8 @@ namespace gazebo
 
     private: void LaunchBall(const physics::ModelPtr _model, Team _side);
 
+    private: void GoalVisuals();
+
     /// \brief World pointer.
     private: physics::WorldPtr world;
 
@@ -63,13 +65,12 @@ namespace gazebo
     // an obstacle.
     private: class Gate
              {
-               public: Gate(const ignition::math::Box &_box, const int _c)
-                       : box(_box), crossedCount(_c) {}
+               public: Gate(const ignition::math::Box &_box, const Team _team)
+                       : box(_box), team(_team) {}
 
                public: ignition::math::Box box;
-               public: int crossedCount = 0;
-
                public: Team team;
+               public: int crossedCount = 0;
              };
 
     private: class Turret
