@@ -19,6 +19,7 @@
 
 #include <vector>
 #include <ignition/math/Box.hh>
+#include <ignition/transport/Node.hh>
 
 #include <gazebo/common/Event.hh>
 #include <gazebo/common/Plugin.hh>
@@ -47,8 +48,6 @@ namespace gazebo
 
     /// \brief World pointer.
     private: physics::WorldPtr world;
-
-    private: transport::NodePtr node;
 
     /// \brief Connection to World Update events.
     private: event::ConnectionPtr updateConnection;

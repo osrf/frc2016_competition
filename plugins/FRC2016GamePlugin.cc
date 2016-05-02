@@ -14,8 +14,6 @@
  * limitations under the License.
  *
 */
-#include <gazebo/transport/Node.hh>
-#include <gazebo/transport/Subscriber.hh>
 #include <gazebo/common/Events.hh>
 #include "FRC2016GamePlugin.hh"
 

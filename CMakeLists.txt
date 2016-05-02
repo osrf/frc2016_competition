@@ -15,6 +15,39 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package()
 include_directories(${catkin_INCLUDE_DIRS})
 
+install(DIRECTORY
+  launch worlds
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(PROGRAMS
+  scripts/run_gazebo
+  scripts/run_gazebo_paused
+  scripts/run_gzclient
+  scripts/run_gzserver
+  scripts/run_gzserver_callgrind
+  scripts/run_gzserver_cheats
+  scripts/run_gzserver_gdb
+  scripts/run_gzserver_memcheck
+  scripts/run_gzserver_perf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts
+)
+
+# Configure the setup script
+configure_file(${PROJECT_SOURCE_DIR}/cmake/setup.sh.in
+               ${PROJECT_BINARY_DIR}/setup.sh @ONLY)
+               install(FILES ${PROJECT_BINARY_DIR}/setup.sh DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+if(UNIX AND NOT APPLE)
+  string(SUBSTRING "${CMAKE_INSTALL_PREFIX}" 0 8 PREFIX_START)
+  if (${PREFIX_START} STREQUAL "/opt/ros")
+    install(FILES ${PROJECT_BINARY_DIR}/setup.sh DESTINATION /usr/share/frc2016_competition)
+  else()
+    install(FILES ${PROJECT_BINARY_DIR}/setup.sh DESTINATION ${CMAKE_INSTALL_PREFIX}/share/frc2016_competition)
+  endif()
+endif()
+
+
 find_package(gazebo REQUIRED)
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
@@ -26,12 +59,17 @@ if (NOT ignition-msgs0_FOUND)
 else()
   message(STATUS "Looking for ignition-msgs0-config.cmake - found")
 endif()
+include_directories(${IGNITION-MSGS_INCLUDE_DIRS})
+link_directories(${IGNITION-MSGS_LIBRARY_DIRS})
 
 find_package(ignition-transport1 QUIET)
 if (NOT ignition-transport1_FOUND)
   message(FATAL "Looking for ignition-transport1-config.cmake - not found")
 else()
-  message(STATUS "Looking for ignition-msgs0-config.cmake - found")
+  message(STATUS "Looking for ignition-transport1-config.cmake - found")
 endif()
+include_directories(${IGNITION-TRANSPORT_INCLUDE_DIRS})
+link_directories(${IGNITION-TRANSPORT_LIBRARY_DIRS})
 
 add_subdirectory(plugins)
+
