@@ -45,7 +45,7 @@ source install/share/frc2016_competition/setup.sh
 1. Run
 
 ```
-roslaunch frc2016_competition frc2016.world
+roslaunch frc2016_competition frc2016.launch
 ```
 
 # The Competition
