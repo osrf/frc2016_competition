@@ -34,9 +34,6 @@ void FRC2016GamePlugin::Load(physics::WorldPtr _world, sdf::ElementPtr /*_sdf*/)
   GZ_ASSERT(_world, "FRC2016GamePlugin world pointer is NULL");
   this->world = _world;
 
-  this->node = transport::NodePtr(new transport::Node());
-  this->node->Init();
-
   this->gates.push_back(
       Gate(ignition::math::Box(1.31, 2.29, 0, 2.31, 3.29, 1.0), 0));
 

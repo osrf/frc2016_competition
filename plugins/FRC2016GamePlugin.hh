@@ -110,6 +110,9 @@ namespace gazebo
     private: std::array<ignition::math::Pose3d, TEAM_COUNT> launchPoses;
 
     private: std::array<std::string, 2> teamNames{{"Red", "Blue"}};
+
+    private: ignition::transport::Node node;
+    private: ignition::transport::Node::PublisherId markerPub;
   };
 }
 

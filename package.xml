@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>frc2016_competition</name>
+  <version>0.1.0</version>
+  <description>The frc2016_competition package</description>
+  <maintainer email="nate@osrfoundation.org">Nate Koenig</maintainer>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+
+</package>
