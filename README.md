@@ -54,14 +54,19 @@
 
     3 different robots, or use 3 identical robots
 
+1. There are 4 possible starting locations
+    1. Three position along the center line
+    1. One position on the opposing team's side (spy bot).
+
 1. The goal is to earn points by achieving the following:
 
     1. Drive over a centerfield barricade
-        1. First time: 3 pts
-        1. Second + time: 5 pts
+        1. First time: 5 pts
+        1. Second time: 10 pts
+        1. Drive over four barricades, two times each: 20pts
     1. Throw a ball into opponent’s tower
-        1. Bottom tower: 10 pts
-        1. Top tower: 20 pts
+        1. Bottom tower: 5 pts
+        1. Top tower: 15 pts
 
 1. 6 balls are lined up at centerfield when match begins, three balls are
    located in each castle
@@ -69,7 +74,7 @@
 1. Additional balls are added to the field from alternating sides at
    1-minute intervals, only if balls are in the castle
 
-1. Teams may teleoperate their robots, or opt for autonomy
+1. Teams may tele-operate their robots, or opt for autonomy
 
 1. The team with the most points at the end of the 10-minute game wins
 
@@ -95,6 +100,8 @@ The `frc2016_compete.launch` script will run two launch files:
 2. blue_team spawn.launch.
 
 Each `spawn.launch` script should spawn your team's robots into Gazebo.
+A ROS service will be provided that returns the possible starting locations
+for your robots. The service is TBD.
 
 
 A ROS message will be sent that signals the start of the competion.
