@@ -4,7 +4,7 @@
 
     You can use the `gazebo_markers` branch for visual markers.
 
-1. ROS (Indigo, Jade, Kinect), or ROS2
+1. ROS (Indigo, Jade, Kinetic), or ROS2
 
 1. Ignition Transport, Math, Msgs
 
@@ -128,4 +128,4 @@ Score will be sent on another ROS topic:
 
 The field is not symmetric. The competition will be run six times. A team
 will start on each side three times.  The team with the largest average
-score will be the winner. 
+score will be the winner.
