@@ -57,7 +57,7 @@ roslaunch frc2016_competition frc2016.launch
     3 different robots, or use 3 identical robots
 
 1. There are 4 possible starting locations
-    1. Three position along the center line
+    1. Three positions along the center line
     1. One position on the opposing team's side (spy bot).
 
 1. The goal is to earn points by achieving the following:
@@ -106,10 +106,10 @@ A ROS service will be provided that returns the possible starting locations
 for your robots. The service is TBD.
 
 
-A ROS message will be sent that signals the start of the competion.
+An Ignition message will be sent that signals the start of the competion.
 
     Topic: /frc2016/game_control
-    Message Type: std_msgs:String
+    Message Type: ignition::msgs:StringMsg
     Data: 'start'
 
 At this point your robots may move and score points. You may use any number
@@ -121,17 +121,17 @@ We will assume everyone is playing nicely, which means:
 1. Don't try to sabatoge the other team.
 1. Don't listen to topics like Gazebo's ground truth.
 
-Competition will end when another ROS message is sent:
+Competition will end when another Ignition message is sent:
 
     Topic: /frc2016/game_control
-    Message Type: std_msgs:String
+    Message Type: ignition::msgs:StringMsg
     Data: 'stop'
 
-Score will be sent on another ROS topic:
+Score will be sent on another Ignition transport topic:
 
     Topic: /frc2016/score
-    Message Type: std_msgs:UInt32MultiArray
-    Data: [0] = Red Score, [1] = Blue score 
+    Message Type: ignition::msgs:Int32_V
+    Data: [0] = Blue Score, [1] = Red score 
 
 ## Winning
 

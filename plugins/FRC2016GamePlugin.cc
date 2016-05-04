@@ -22,6 +22,11 @@ using namespace gazebo;
 
 GZ_REGISTER_WORLD_PLUGIN(FRC2016GamePlugin)
 
+#define UPPER_TURRET_SCORE 10
+#define LOWER_TURRET_SCORE 5
+#define GATE_BASE_SCORE 5
+#define GATE_SCORE_FACTOR 5
+
 /////////////////////////////////////////////////
 FRC2016GamePlugin::FRC2016GamePlugin()
 {
@@ -92,6 +97,9 @@ void FRC2016GamePlugin::Load(physics::WorldPtr _world, sdf::ElementPtr /*_sdf*/)
 
   this->updateConnection = event::Events::ConnectWorldUpdateBegin(
           std::bind(&FRC2016GamePlugin::OnUpdate, this));
+
+  this->scorePubId = this->node.Advertise<ignition::msgs::Int32_V>(
+      "/frc2016/score");
 
   // Disply the goals as visual markers.
   // this->GoalVisuals();
@@ -212,7 +220,6 @@ void FRC2016GamePlugin::GoalVisuals()
 
   /////////////////////////////////////
   // Draw the gates
-
   for (auto const &gate : this->gates)
   {
     markerMsg.set_id(id++);
@@ -241,42 +248,44 @@ void FRC2016GamePlugin::OnUpdate()
     std::string modelName = model->GetName();
     ignition::math::Pose3d modelPose = model->GetWorldPose().Ign();
 
+    // Check if a ball scored in a turret.
     if (modelName.find("ball") != std::string::npos)
     {
       for (auto &turret : this->turrets)
       {
         if (turret.upperGoal.Contains(modelPose.Pos()))
         {
-          this->score[turret.team] += 20;
+          this->score[(turret.team+1)%2] += UPPER_TURRET_SCORE;
 
-          std::cout << this->teamNames[turret.team]
+          std::cout << this->teamNames[(turret.team+1)%2]
             << " scored in the upper turret for 20 points. "
-            << this->teamNames[turret.team] << " score = "
-            << this->score[turret.team] << "\n";
+            << this->teamNames[(turret.team+1)%2] << " score = "
+            << this->score[(turret.team+1)%2] << "\n";
 
           model->SetWorldPose(this->ballBin[turret.team]);
         }
         else if (turret.lowerGoal.Contains(modelPose.Pos()))
         {
-          this->score[turret.team] += 10;
+          this->score[(turret.team+1)%2] += LOWER_TURRET_SCORE;
 
-          std::cout << this->teamNames[turret.team]
+          std::cout << this->teamNames[(turret.team+1)%2]
             << " scored in the lower turret for 10 points. "
             << this->teamNames[turret.team] << " score = "
-            << this->score[turret.team] << "\n";
+            << this->score[(turret.team+1)%2] << "\n";
 
           model->SetWorldPose(this->ballBin[turret.team]);
         }
       }
     }
 
-    // Ignore game pieces.
+    // Ignore game pieces from this point on in the loop.
     if (std::find(this->gamePieces.begin(),
           this->gamePieces.end(), modelName) != this->gamePieces.end())
     {
       continue;
     }
 
+    // Check if a team has crossed the gate.
     for (auto &gate : this->gates)
     {
       // Ignore robots that are on the same "team" as the gate.
@@ -300,21 +309,68 @@ void FRC2016GamePlugin::OnUpdate()
         if (this->planes[RED].Side(this->inGate[modelName].entered.Pos()) !=
             this->planes[RED].Side(modelPose.Pos()))
         {
-          // todo: check that a blue robot did the scoring
-          this->score[BLUE] += gate.crossedCount++ > 0 ? 5 : 3;
-          std::cout << "Blue scored on red! Blue score = "
-            << this->score[BLUE] << "\n";
+          if (gate.crossedCount == 0 || gate.crossedCount == 1)
+          {
+            this->score[BLUE] += gate.crossedCount * GATE_SCORE_FACTOR +
+              GATE_BASE_SCORE;
+            gate.crossedCount++;
+
+            std::cout << "Blue scored on red! Blue score = "
+              << this->score[BLUE] << "\n";
+          }
         }
 
         if (this->planes[BLUE].Side(this->inGate[modelName].entered.Pos()) !=
             this->planes[BLUE].Side(modelPose.Pos()))
         {
-          // todo: check that a red robot did the scoring
-          this->score[RED] += gate.crossedCount++ > 0 ? 5 : 3;
-          std::cout << "Red scored on blue! Red score = "
-            << this->score[RED] << "\n";
+          if (gate.crossedCount == 0 || gate.crossedCount == 1)
+          {
+            this->score[RED] += gate.crossedCount * GATE_SCORE_FACTOR +
+              GATE_BASE_SCORE;
+            gate.crossedCount++;
+
+            std::cout << "Red scored on red! Red score = "
+              << this->score[RED] << "\n";
+          }
         }
       }
     }
   }
+
+  this->UpdateScore();
+}
+
+/////////////////////////////////////////////////
+void FRC2016GamePlugin::UpdateScore()
+{
+  ignition::msgs::Marker markerMsg;
+  ignition::msgs::StringMsg response;
+  bool result;
+
+  markerMsg.set_id(1000);
+  markerMsg.set_action(ignition::msgs::Marker::ADD_MODIFY);
+  markerMsg.set_type(ignition::msgs::Marker::TEXT);
+  markerMsg.set_text("Red " + std::to_string(this->score[RED]));
+  ignition::msgs::Material *matMsg = markerMsg.mutable_material();
+  matMsg->mutable_script()->set_name("Gazebo/RedTransparent");
+  ignition::msgs::Set(markerMsg.mutable_scale(),
+                    ignition::math::Vector3d(0.8, 0.8, 0.8));
+  ignition::msgs::Set(markerMsg.mutable_pose(),
+                    ignition::math::Pose3d(-4, -2, 2, 0, 0, 0));
+  node.Request("/marker", markerMsg, 1000, response, result);
+
+  markerMsg.set_id(1001);
+  markerMsg.set_text("Blue " + std::to_string(this->score[BLUE]));
+  matMsg = markerMsg.mutable_material();
+  matMsg->mutable_script()->set_name("Gazebo/BlueTransparent");
+  ignition::msgs::Set(markerMsg.mutable_scale(),
+                    ignition::math::Vector3d(0.8, 0.8, 0.8));
+  ignition::msgs::Set(markerMsg.mutable_pose(),
+                    ignition::math::Pose3d(-4, 2, 2, 0, 0, 0));
+  node.Request("/marker", markerMsg, 1000, response, result);
+
+  ignition::msgs::Int32_V scoreMsg;
+  scoreMsg.add_data(this->score[BLUE]);
+  scoreMsg.add_data(this->score[RED]);
+  this->node.Publish(this->scorePubId, scoreMsg);
 }

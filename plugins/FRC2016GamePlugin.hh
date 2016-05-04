@@ -47,6 +47,7 @@ namespace gazebo
     private: void LaunchBall(const physics::ModelPtr _model, Team _side);
 
     private: void GoalVisuals();
+    private: void UpdateScore();
 
     /// \brief World pointer.
     private: physics::WorldPtr world;
@@ -102,7 +103,9 @@ namespace gazebo
     private: std::vector<std::string> gamePieces;
 
     // Names of the red and blue robots
-    private: std::array<std::vector<std::string>, TEAM_COUNT> robots;
+    private: std::array<std::vector<std::string>, TEAM_COUNT> robots
+             {{{"blue_robot_1", "blue_robot_2", "blue_robot_3"},
+               {"red_robot_1", "red_robot_2", "red_robot_3"}}};
 
     private: std::array<int, TEAM_COUNT> score{{0, 0}};
 
@@ -113,6 +116,8 @@ namespace gazebo
 
     private: ignition::transport::Node node;
     private: ignition::transport::Node::PublisherId markerPub;
+
+    private: ignition::transport::Node::PublisherId scorePubId;
   };
 }
 
