@@ -114,16 +114,31 @@ upload any models, plugins, and code. The two directories will be
 prior to launch. Use this script to add paths to environment variables so
 that Gazebo and ROS can find your models, plugins, and packages.
 
-
 The `frc2016_compete.launch` script will run two launch files:
 
-1. red_team spawn.launch
-2. blue_team spawn.launch.
+1. red_team spawn[1-6].launch
+2. blue_team spawn[1-6].launch.
 
-Each `spawn.launch` script should spawn your team's robots into Gazebo.
-A ROS service will be provided that returns the possible starting locations
-for your robots. The service is TBD.
+Six trials will be run. The first trial will run `spawn1.launch`, the second
+`spawn2.launch` and so on.
 
+Each `spawn.launch` script should spawn your team's robots into Gazebo. The
+possible starting locations for each team are:
+
+    1. Red
+        1. x:-2 y:-1
+        1. x:-1 y:-1
+        1. x:0 y:-1
+        1. x:1 y:-1
+        1. x:2 y:-1
+        1. x:-3 y:7
+    1. Blue
+        1. x:-2 y:1
+        1. x:-1 y:1
+        1. x:0 y:1
+        1. x:1 y:1
+        1. x:2 y:1
+        1. x:3 y:-7
 
 An Ignition message will be sent that signals the start of the competion.
 
