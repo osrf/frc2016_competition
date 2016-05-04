@@ -82,6 +82,23 @@ roslaunch frc2016_competition frc2016.launch
 
 1. The team with the most points at the end of the 10-minute game wins
 
+1. Cameras
+
+    1. Each team may have a total of two cameras.
+    1. A camera may be attached to a robot.
+        1. The camera can be attached to a pan-tilt unit, but must remain
+           fixed to the model.
+    1. A camera may be placed behind their team's castle
+        1. The camera's Z position must be between 0.5 and 2.0 meters above
+           the ground plane.
+        1. The camera's Z position must be between -4.0 and 4.0 meteres in
+           the world coordinate frame
+        1. Red: Camera's Y position must be less than -8.3 meters in the world coordinate frame
+        1. Blue: Camera's Y position must be greater than 8.3 meters in the world coordinate frame.
+        1. A camera behind a team's castle can be floating and movable
+    1. It is not possible to add or remove cameras during competition.
+    1. It is not possible to swap castle and robot cameras.
+
 ## Procedure
 
 The final competition will be run on a single computer in the cafe. This
