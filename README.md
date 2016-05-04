@@ -110,19 +110,17 @@ roslaunch frc2016_competition frc2016_compete.launch
 
 Each team will be allowed one directory on the cafe machine in which to
 upload any models, plugins, and code. The two directories will be
-`~/red_team` and `~/blue_team`. A `setup.sh` in each directory will be run
-prior to launch. Use this script to add paths to environment variables so
-that Gazebo and ROS can find your models, plugins, and packages.
+`~/red_team` and `~/blue_team`. 
 
 The `frc2016_compete.launch` script will run two launch files:
 
-1. red_team spawn[1-6].launch
-2. blue_team spawn[1-6].launch.
+1. frc2016_competition/launch/red_spawn[1-6].launch
+2. frc2016_competition/launch/blue_spawn[1-6].launch
 
 Six trials will be run. The first trial will run `spawn1.launch`, the second
 `spawn2.launch` and so on.
 
-Each `spawn.launch` script should spawn your team's robots into Gazebo. The
+Each spawn launch script should spawn your team's robots into Gazebo. The
 possible starting locations for each team are:
 
     1. Red
