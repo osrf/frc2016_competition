@@ -53,7 +53,7 @@ include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-find_package(ignition-msgs0 0.1 QUIET)
+find_package(ignition-msgs0 QUIET)
 if (NOT ignition-msgs0_FOUND)
   message(FATAL "Looking for ignition-msgs0-config.cmake - not found")
 else()
