@@ -6,7 +6,9 @@
 
 1. ROS (Indigo, Jade, Kinetic), or ROS2
 
-1. Ignition Transport, Math, Msgs
+1. `gazebo-ros-pkgs` for Gazebo 7 (`sudo apt-get install ros-<distro>-gazebo7-ros-pkgs`)
+
+1. Ignition Transport, Math, Msgs (`sudo apt-get install libignition-msgs-dev libignition-math-dev libignition-transport-dev`)
 
 # Install
 
