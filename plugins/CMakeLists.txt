@@ -1,3 +1,3 @@
 add_library(frc2016_game_plugin SHARED FRC2016GamePlugin.cc)
-target_link_libraries(frc2016_game_plugin ${GAZEBO_LIBRARIES} ${IGNITION-TRANSPORT_LIBRARIES})
+target_link_libraries(frc2016_game_plugin ${GAZEBO_LIBRARIES} ${IGNITION-TRANSPORT_LIBRARIES} ${IGNITION-MSGS_LIBRARIES})
 install(TARGETS frc2016_game_plugin DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
