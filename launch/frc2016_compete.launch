@@ -2,9 +2,10 @@
   <arg name="gzname" default="gazebo"/>
   <arg name="gzworld" default="frc2016.world"/>
   <arg name="extra_gazebo_args" default="--verbose"/>
+  <arg name="iter" default="1"/>
 
   <node name="gazebo" pkg="frc2016_competition" type="run_$(arg gzname)" args="$(arg gzworld) $(arg extra_gazebo_args)" output="screen" />
 
-  <include file="$(find red_team)/launch/spawn.launch" />
-  <include file="$(find blue_team)/launch/spawn.launch" />
+  <include file="$(find frc2016_competition)/launch/red_spawn$(arg iter).launch" />
+  <include file="$(find frc2016_competition)/launch/blue_spawn$(arg iter).launch" />
 </launch>
