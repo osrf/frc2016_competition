@@ -36,7 +36,7 @@ install(PROGRAMS
 # Configure the setup script
 configure_file(${PROJECT_SOURCE_DIR}/cmake/setup.sh.in
                ${PROJECT_BINARY_DIR}/setup.sh @ONLY)
-               install(FILES ${PROJECT_BINARY_DIR}/setup.sh DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+catkin_add_env_hooks(setup SHELLS sh DIRECTORY ${PROJECT_BINARY_DIR})
 
 if(UNIX AND NOT APPLE)
   string(SUBSTRING "${CMAKE_INSTALL_PREFIX}" 0 8 PREFIX_START)
