@@ -14,6 +14,7 @@
  * limitations under the License.
  *
 */
+#include <ignition/math/Rand.hh>
 #include <ignition/msgs.hh>
 #include <gazebo/common/Events.hh>
 #include "FRC2016GamePlugin.hh"
