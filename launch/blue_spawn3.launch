@@ -1,2 +1,3 @@
 <launch>
+  <include file="$(find frc2016_competition)/launch/blue_spawn1.launch" />
 </launch>
