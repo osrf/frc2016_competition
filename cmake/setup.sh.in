@@ -6,8 +6,8 @@ elif [ -f /usr/share/gazebo/setup.sh ]; then
   . /usr/share/gazebo/setup.sh
 elif [ -f ~/local/share/gazebo/setup.sh ]; then
   . ~/local/share/gazebo/setup.sh
-else
-  echo "Warning: failed to find Gazebo's setup.sh.  You will need to source it manually."
+# else
+  # echo "Warning: failed to find Gazebo's setup.sh.  You will need to source it manually."
 fi
 
 export GAZEBO_RESOURCE_PATH=@CMAKE_INSTALL_PREFIX@/share/@PROJECT_NAME@:$GAZEBO_RESOURCE_PATH
