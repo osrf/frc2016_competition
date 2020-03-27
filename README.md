@@ -91,7 +91,7 @@ roslaunch frc2016_competition frc2016.launch
     1. A camera may be placed behind their team's castle
         1. The camera's Z position must be between 0.5 and 2.0 meters above
            the ground plane.
-        1. The camera's Z position must be between -4.0 and 4.0 meteres in
+        1. The camera's X position must be between -4.0 and 4.0 meteres in
            the world coordinate frame
         1. Red: Camera's Y position must be less than -8.3 meters in the world coordinate frame
         1. Blue: Camera's Y position must be greater than 8.3 meters in the world coordinate frame.
@@ -110,7 +110,7 @@ roslaunch frc2016_competition frc2016_compete.launch
 
 Each team will be allowed one directory on the cafe machine in which to
 upload any models, plugins, and code. The two directories will be
-`~/red_team` and `~/blue_team`. 
+`~/red_team` and `~/blue_team`.
 
 The `frc2016_compete.launch` script will run two launch files:
 
@@ -163,7 +163,7 @@ Score will be sent on another Ignition transport topic:
 
     Topic: /frc2016/score
     Message Type: ignition::msgs:Int32_V
-    Data: [0] = Blue Score, [1] = Red score 
+    Data: [0] = Blue Score, [1] = Red score
 
 ## Winning
 
